@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useRef } from "react";
+export default function App() {
+  const matrix = new Array(4).fill(0).map(() => new Array(4).fill(0));
 
-function App() {
+  const [grid, setGrid] = useState(matrix);
+
+  const SetColor = (i, j) => {
+    const newGrid = grid.map(function (arr) {
+      return arr.slice();
+    });
+
+    newGrid[i][j] ? (newGrid[i][j] = 0) : (newGrid[i][j] = 1);
+    setGrid(newGrid);
+
+    // setText(i, j);
+  };
+  const setText = (i, j) => {};
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4,60px)",
+        }}
+      >
+        {grid.map((rows, i) =>
+          rows.map((col, j) => (
+            <div
+              onClick={() => SetColor(i, j)}
+              style={{
+                width: "60px",
+                height: "60px",
+                backgroundColor: grid[i][j] ? "red" : "blue",
+                border: "1px solid black",
+              }}
+            ></div>
+          ))
+        )}
+      </div>
     </div>
   );
 }
-
-export default App;
