@@ -3,18 +3,32 @@ export default function App() {
   const matrix = new Array(4).fill(0).map(() => new Array(4).fill(0));
 
   const [grid, setGrid] = useState(matrix);
-
+  const [selectedBox, setSelectedBox] = useState([])
   const SetColor = (i, j) => {
-    const newGrid = grid.map(function (arr) {
+    if (selectedBox.length < 2) {
+      console.log(selectedBox)
+      selectedBox.push(`${i}${j}`)
+      console.log(1)
+    }
+    else {
+      selectedBox.push(`${i}${j}`)
+      selectedBox.shift()
+      console.log(selectedBox)
+      console.log(2)
+    }
+    
+   const zeroGrid = new Array(4).fill(0).map(() => new Array(4).fill(0));
+    const newGrid = zeroGrid.map(function (arr) {
+
       return arr.slice();
     });
+    selectedBox.map((k) => { newGrid[k[0]][k[1]] = 1 })
 
-    newGrid[i][j] ? (newGrid[i][j] = 0) : (newGrid[i][j] = 1);
     setGrid(newGrid);
 
-    // setText(i, j);
+    
   };
-  const setText = (i, j) => {};
+  const setText = (i, j) => { };
   return (
     <div className="App">
       <div
